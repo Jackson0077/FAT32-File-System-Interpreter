@@ -1,95 +1,25 @@
-FAT32 File System Interpreter
+# FAT32 File System Interpreter
 
-Overview
+## Overview
+This project implements a simple FAT32 file system interpreter in C. It allows users to open a FAT32 disk image and interact with it using various commands, such as listing directories, retrieving file statistics, and manipulating files and directories. 
 
-This program is a FAT32 file system interpreter written in C. It allows users to interact with a FAT32-formatted disk image through a custom shell interface (msf>). The interpreter supports a variety of commands for file and directory manipulation.
+## Features
+The following commands are supported:
 
-Features
+- **OPEN \<file\>** — Opens a FAT32 file system image for reading and writing.
+- **CLOSE** — Closes the currently open file system image.
+- **INFO** — Displays key file system information, including bytes per sector, sectors per cluster, and FAT size.
+- **LS** — Lists the contents of the current or parent directory.
+- **CD \<directory\>** — Changes the current directory. Supports relative and absolute paths.
+- **STAT \<file/dir\>** — Displays the attributes and starting cluster number of a file or directory.
+- **GET \<file\> [new_name]** — Copies a file from the FAT32 image to the local file system.
+- **PUT \<file\> [new_name]** — Copies a file from the local file system into the FAT32 image.
+- **READ \<file\> \<position\> \<bytes\> [-ASCII|-DEC]** — Reads a specified number of bytes from a file at a given position, with optional output formatting.
+- **DEL \<file\>** — Deletes a file by marking its directory entry as deleted.
+- **UNDEL \<file\>** — Recovers a deleted file if its entry has not been overwritten.
+- **EXIT/QUIT** — Exits the program.
 
-File system operations:
-
-OPEN <filename>: Opens a FAT32 disk image.
-
-CLOSE: Closes the currently opened disk image.
-
-INFO: Displays file system information.
-
-File operations:
-
-GET <filename>: Retrieves a file from the disk image.
-
-PUT <filename> [newname]: Adds a file to the disk image, optionally renaming it.
-
-READ <filename> <position> <num_bytes> [-ASCII | -DEC]: Reads bytes from a file.
-
-DEL <filename>: Marks a file as deleted.
-
-UNDEL <filename>: Recovers a deleted file.
-
-Directory operations:
-
-CD <path>: Changes the current directory (supports relative and absolute paths).
-
-LS [..]: Lists the contents of the current or parent directory.
-
-Meta commands:
-
-EXIT or QUIT: Exits the program.
-
-Compilation
-
-Compile the program using:
-
-gcc -o mfs mfs.c
-
-Usage
-
-Run the compiled program:
-
-./mfs
-
-Once running, use the available commands to interact with the file system.
-
-Example session:
-
-msf> OPEN disk.img
-msf> INFO
-msf> LS
-msf> CD Documents
-msf> GET file.txt
-msf> PUT newfile.txt
-msf> EXIT
-
-Implementation
-
-The program parses user commands with strtok and processes them case-insensitively.
-
-FAT32 metadata is read from the disk image using direct file operations (fseek, fread, fwrite).
-
-Directory entries are represented using a DirectoryEntry struct.
-
-Cluster addressing and traversal are implemented via LABToOffset and NextLB functions.
-
-Error Handling
-
-The program includes basic error checking, with error messages for:
-
-Invalid commands or missing arguments.
-
-Attempting operations without an open disk image.
-
-File not found errors.
-
-Limitations
-
-Assumes a valid FAT32 disk image is used.
-
-Does not support long file names (uses the 8.3 filename format).
-
-Limited error handling for complex directory structures.
-
-Acknowledgments
-
-This project was developed as part of an educational exercise in file system design and C programming.
-
-Let me know if you'd like me to adjust the structure or tone!
+## Compilation
+Compile the program using `gcc`:
+```bash
+gcc mfs.c -o mfs
