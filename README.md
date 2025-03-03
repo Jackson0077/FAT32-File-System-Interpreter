@@ -20,6 +20,6 @@ The following commands are supported:
 - **EXIT/QUIT** — Exits the program.
 
 ## Compilation
-Compile the program using `gcc`:
+Compile the program using `make`:
 ```bash
-gcc mfs.c -o mfs
+make
